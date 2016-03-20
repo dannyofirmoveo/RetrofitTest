@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -41,14 +42,17 @@ public class MainActivity extends AppCompatActivity implements Callback<MovieLis
 
     public void button_onClick(View view) {
 
+        EditText editText = (EditText) findViewById(R.id.editText);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://www.omdbapi.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
         GetMovieApi api = retrofit.create(GetMovieApi.class);
 
-        Call<MovieList> call = api.getMovieList("Saving");
+        Call<MovieList> call = api.getMovieList(editText.getText().toString());
 
         call.enqueue(this);
 
